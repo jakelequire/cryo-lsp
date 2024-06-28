@@ -1,0 +1,20 @@
+{
+    "name": "Cryo",
+    "scopeName": "source.cryo",
+    "patterns": [
+        {
+            "name": "comment.line.double-slash.cryo",
+            "match": "//.*$"
+        },
+        {
+            "name": "comment.block.cryo",
+            "begin": "/\\*",
+            "end": "\\*/"
+        },
+        {
+            "name": "keyword.control.cryo",
+            "match": "\\b(if|else|while|return|function|const|let|var|import|from|new|class|extends|constructor|super|public|private|protected|static|readonly|async|await|try|catch|finally|throw|interface|type|enum|implements|namespace|declare|export|default|as|typeof|instanceof|in|of|void|any|never|undefined|null|this|true|false|abstract|boolean|number|string|symbol|bigint|unknown|object|keyof|asserts|is|infer|readonly)\\b"
+        }
+    ],
+    "repository": {}
+}

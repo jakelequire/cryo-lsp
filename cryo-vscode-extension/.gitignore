@@ -5,3 +5,18 @@ node_modules
 ./**/node_modules
 */node_modules
 */**/node_modules
+
+# Ignore .vscode directory everywhere
+.vscode
+./.vscode
+./**/.vscode
+*/.vscode
+*/**/.vscode
+
+
+# Ignore .vsix file
+*.vsix
+./**/*.vsix
+*/**/*.vsix
+
+./**/cryo-vscode-extension-0.0.1.vsix

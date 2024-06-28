@@ -9,6 +9,23 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "contributes": {
+    "languages": [
+      {
+        "id": "cryo",
+        "aliases": ["Cryo", "cryo"],
+        "extensions": [".cryo"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "cryo",
+        "scopeName": "source.cryo",
+        "path": "./syntaxes/cryo.tmLanguage.json"
+      }
+    ]
+  },
   "dependencies": {
     "vscode-languageserver": "^9.0.1"
   }

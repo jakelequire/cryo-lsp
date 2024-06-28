@@ -37,8 +37,9 @@ documents.onDidChangeContent((change) => {
     connection.console.log(`Document changed: ${change.document.uri}`);
 });
 
+
 connection.onHover((_textDocumentPosition: TextDocumentPositionParams): Hover => {
-    const content: string = 'This is a hover message from the Cryo LSP server.';
+    const content: string = '';
     return {
         contents: { kind: 'plaintext', value: content },
     };

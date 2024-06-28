@@ -1,0 +1,20 @@
+{
+    "semanticTokenColors": {
+      "comment": {
+        "foreground": "#6A9955"
+      },
+      "string": {
+        "foreground": "#ce9178"
+      },
+      "keyword": {
+        "foreground": "#569cd6"
+      },
+      "type": {
+        "foreground": "#4EC9B0"
+      },
+      "function": {
+        "foreground": "#dcdcaa"
+      }
+    }
+  }
+  

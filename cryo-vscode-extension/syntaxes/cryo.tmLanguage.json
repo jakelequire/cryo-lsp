@@ -1,0 +1,79 @@
+{
+  "name": "Cryo",
+  "scopeName": "source.cryo",
+  "patterns": [
+    {
+      "name": "comment.line.double-slash.cryo",
+      "match": "//.*$"
+    },
+    {
+      "name": "comment.block.cryo",
+      "begin": "/\\*",
+      "end": "\\*/"
+    },
+    {
+      "name": "keyword.declaration.cryo",
+      "match": "\\b(const|mut|function|private|public|constructor|interface|type|async|this|true|false)\\b"
+    },
+    {
+      "name": "keyword.control.cryo",
+      "match": "\\b(if|else|for|while|do|continue|break|return)\\b"
+    },
+    {
+      "name": "keyword.type.cryo",
+      "match": "\\b(int|float|string|boolean|void|undefined)\\b"
+    },
+    {
+      "name": "keyword.operator.cryo",
+      "match": "\\b(and|or|not|in|is|as|instanceof|typeof|new)\\b"
+    },
+    {
+      "name": "keyword.other.cryo",
+      "match": "\\b(null|undefined|NaN|Infinity)\\b"
+    },
+    {
+      "name": "constant.language.cryo",
+      "match": "\\b(true|false|null|undefined|NaN|Infinity)\\b"
+    },
+    {
+      "name": "constant.numeric.cryo",
+      "match": "\\b(\\d+(\\.\\d+)?|\\.\\d+)(e[+-]?\\d+)?\\b"
+    },
+    {
+      "name": "constant.string.cryo",
+      "begin": "\"",
+      "end": "\""
+    },
+    {
+      "name": "constant.string.cryo",
+      "begin": "'",
+      "end": "'"
+    },
+    {
+      "name": "constant.string.cryo",
+      "begin": "`",
+      "end": "`"
+    },
+    {
+      "name": "variable.cryo",
+      "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
+    },
+    {
+      "name": "punctuation.cryo",
+      "match": "[{}\\[\\](),.:;]"
+    },
+    {
+      "name": "operator.cryo",
+      "match": "[+\\-*/%&|^<>!~]=?"
+    },
+    {
+      "name": "operator.cryo",
+      "match": "\\?|\\|\\||&&|\\+\\+|--|<<|>>|>>>|==|!=|<=|>=|=>|\\+|-|\\*|/|%|&|\\||\\^|<|>"
+    },
+    {
+      "name": "type.cryo",
+      "match": "\\b(int|float|string|boolean|void|undefined)\\b"
+    }
+  ],
+  "repository": {}
+}

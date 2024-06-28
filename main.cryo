@@ -1,0 +1,38 @@
+// This is a test
+/*
+    This is a test
+*/
+const foo: int = 20;
+
+function foo() {
+    return 20;
+}
+
+"Hello World"
+{}
+[]
+()
+const
+mut
+function
+return
+if
+else
+while
+for
+break
+continue
+true
+false
+null
+void
+int
+float
+boolean
+
+async
+
+comment
+static
+
+
