@@ -19,31 +19,72 @@
   ],
   "main": "out/src/extension.js",
   "contributes": {
-    "languages": [
-      {
-        "id": "cryo",
-        "aliases": ["Cryo", "cryo"],
-        "extensions": [".cryo"],
-        "configuration": "./language-configuration.json"
-      }
-    ],
-    "grammars": [
-      {
-        "language": "cryo",
-        "scopeName": "source.cryo",
-        "path": "./syntaxes/cryo.tmLanguage.json"
-      }
-    ],
-    "files": [
-      "themes/cryo-theme.json"
-    ],
-    "[cryo]": {
-      "editor.tabSize": 4,
-      "editor.insertSpaces": true,
-      "editor.detectIndentation": false
-
-    }
-  },
+        "languages": [
+            {
+                "id": "cryo",
+                "aliases": ["Cryo", "cryo"],
+                "extensions": [".cryo"],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "cryo",
+                "scopeName": "source.cryo",
+                "path": "./syntaxes/cryo.tmLanguage.json"
+            }
+        ],
+        "semanticTokenScopes": [
+            {
+                "scope": "variable.readonly",
+                "settings": {
+                    "foreground": "#FF0000"
+                }
+            },
+            {
+                "scope": "entity.name.function",
+                "settings": {
+                    "foreground": "#00FF00"
+                }
+            },
+            {
+                "scope": "variable.parameter",
+                "settings": {
+                    "foreground": "#0000FF"
+                }
+            },
+            {
+                "scope": "keyword",
+                "settings": {
+                    "foreground": "#FF00FF"
+                }
+            },
+            {
+                "scope": "comment",
+                "settings": {
+                    "foreground": "#FFFF00"
+                }
+            },
+            {
+                "scope": "string",
+                "settings": {
+                    "foreground": "#00FFFF"
+                }
+            },
+            {
+                "scope": "constant.numeric",
+                "settings": {
+                    "foreground": "#FFA500"
+                }
+            },
+            {
+                "scope": "keyword.operator",
+                "settings": {
+                    "foreground": "#A52A2A"
+                }
+            }
+        ] 
+    },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",

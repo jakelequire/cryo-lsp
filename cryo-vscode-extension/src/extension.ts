@@ -10,6 +10,57 @@ import {
 
 let client: LanguageClient;
 
+const cryoConfig = [
+    {
+        scope: 'comment.line.double-slash.cryo',
+        settings: {
+            foreground: '#6A9955', // Green for comments
+        },
+    },
+    {
+        scope: 'comment.block.cryo',
+        settings: {
+            foreground: '#6A9955', // Green for comments
+        },
+    },
+    {
+        scope: 'keyword.declaration.cryo',
+        settings: {
+            foreground: '#569CD6', // Dark-ish blue for declarations (const, mut, function)
+        },
+    },
+    {
+        scope: 'keyword.control.cryo',
+        settings: {
+            foreground: '#C586C0', // Pink/purple for control keywords
+        },
+    },
+    {
+        scope: 'storage.type.cryo',
+        settings: {
+            foreground: '#4EC9B0', // Teal/green for types (int, float, boolean, etc.)
+        },
+    },
+    {
+        scope: 'keyword.operator.cryo',
+        settings: {
+            foreground: '#D4D4D4', // Light gray for operators
+        },
+    },
+    {
+        scope: 'constant.numeric.cryo',
+        settings: {
+            foreground: '#B5CEA8', // Light green for numbers
+        },
+    },
+    {
+        scope: 'string.quoted.double.cryo',
+        settings: {
+            foreground: '#CE9178', // Light red for strings
+        },
+    }
+];
+
 const tokenTypesLegend = [
     'comment', 'string', 'keyword', 'number', 'regexp', 'operator', 'namespace',
     'type', 'struct', 'class', 'interface', 'enum', 'typeParameter', 'function',
@@ -75,11 +126,10 @@ export function activate(context: vscode.ExtensionContext) {
     const themePath = context.asAbsolutePath(path.join('themes', 'cryo-theme.json'));
     const themeData = JSON.parse(fs.readFileSync(themePath, 'utf8'));
 
-    const config = vscode.workspace.getConfiguration('editor');
-    const existingConfig = config.get('tokenColorCustomizations') || {};
-    // @ts-ignore
-    const updatedConfig = { ...existingConfig, semanticTokenColors: { ...existingConfig.semanticTokenColors, ...themeData.semanticTokenColors } };
-    config.update('tokenColorCustomizations', updatedConfig, vscode.ConfigurationTarget.Global);
+    const config = vscode.workspace.getConfiguration('editor.tokenColorCustomizations');
+    const existingConfig = config.get('textMateRules') || [];
+    const updatedConfig = Array.isArray(existingConfig) ? existingConfig : [];
+    config.update('textMateRules', [...updatedConfig, ...cryoConfig], vscode.ConfigurationTarget.Global);
 
     console.log("Cryo Extension Activated with theme.");
 

@@ -20,7 +20,7 @@ const cryoConfig = [
     {
         scope: 'keyword.declaration.cryo',
         settings: {
-            foreground: '#569CD6', // Dark-ish blue for declarations
+            foreground: '#569CD6', // Dark-ish blue for declarations (const, mut, function)
         },
     },
     {
@@ -30,11 +30,29 @@ const cryoConfig = [
         },
     },
     {
-        scope: 'keyword.type.cryo',
+        scope: 'storage.type.cryo',
         settings: {
-            foreground: '#4EC9B0', // Teal/green for types
+            foreground: '#4EC9B0', // Teal/green for types (int, float, boolean, etc.)
         },
     },
+    {
+        scope: 'keyword.operator.cryo',
+        settings: {
+            foreground: '#D4D4D4', // Light gray for operators
+        },
+    },
+    {
+        scope: 'constant.numeric.cryo',
+        settings: {
+            foreground: '#B5CEA8', // Light green for numbers
+        },
+    },
+    {
+        scope: 'string.quoted.double.cryo',
+        settings: {
+            foreground: '#CE9178', // Light red for strings
+        },
+    }
 ];
 
 function activate(context) {
@@ -64,6 +82,20 @@ function activate(context) {
         serverOptions,
         clientOptions
     );
+
+    client.onReady().then(() => {
+        client.sendRequest(SemanticTokensRegistrationType.method, {
+            id: 'semantic-tokens',
+            registerOptions: {
+                documentSelector: [{ scheme: 'file', language: 'cryo' }],
+                legend,
+                range: true,
+                full: {
+                    delta: true
+                }
+            }
+        });
+    })
 
         // Update the token color customizations
         const config = vscode.workspace.getConfiguration('editor.tokenColorCustomizations');

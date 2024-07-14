@@ -21,3 +21,4 @@ node_modules
 
 ./**/cryo-vscode-extension-0.0.1.vsix
 *.vsix
+lsp.zip
