@@ -2,19 +2,39 @@
 /*
     This is a test
 */
-const foo: int = 20;
+const biz: int = 20;
+const bar: string = "Hello World";
+const baz: float = 20.0;
+const foo: boolean = true;
+const qux: Array[int] = [1, 2, 3, 4, 5];
 
-function foo() {
+function foo() -> void {
     return 20;
 }
+foo();
 
 "Hello World"
+'Hi there!'
+`Hello World`
+
+34 + 20 - 10 * 2 / 5 % 2
 {}
 []
 ()
+null
+void
+int
+float
+string
+boolean
+Function
+Object
+Array
 const
 mut
 function
+class
+type
 return
 if
 else
@@ -22,18 +42,16 @@ while
 for
 break
 continue
-true
-false
-null
-void
-int
-float
-boolean
-
 async
 
+typeof
+instanceof
+as
+
+true
+false
+
 extern
-comment
 static
 
 

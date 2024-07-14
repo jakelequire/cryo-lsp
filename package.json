@@ -1,0 +1,124 @@
+{
+    "name": "cryo-lsp",
+    "description": "Cryo Language Server",
+    "displayName": "Cryo Language Support",
+    "author": "Jake LeQuire",
+    "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jakelequire/cryo-lsp"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "keywords": [
+        "multi-root ready"
+    ],
+    "engines": {
+        "vscode": "^1.75.0"
+    },
+    "activationEvents": [
+        "onLanguage:cryo"
+    ],
+    "main": "./client/out/extension",
+    "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "Example configuration",
+            "semanticHighlighting": true,
+            "properties": {
+                "cryoLanguageServer.maxNumberOfProblems": {
+                    "scope": "resource",
+                    "type": "number",
+                    "default": 100,
+                    "description": "Controls the maximum number of problems produced by the server."
+                },
+                "cryoLanguageServer.port": {
+                    "type": "number",
+                    "default": 7000,
+                    "scope": "window",
+                    "description": "The WebSocket port to stream LSP log data into."
+                },
+                "cryoLanguageServer.trace.server": {
+                    "scope": "window",
+                    "type": "string",
+                    "enum": [
+                        "off",
+                        "messages",
+                        "verbose"
+                    ],
+                    "default": "off",
+                    "description": "Traces the communication between VS Code and the language server."
+                },
+                "cryoLanguageServer.semanticTokenScopes": {
+                    "type": "object",
+                    "description": "Semantic token scopes for Cryo language.",
+                    "default": {
+                        "variable": [
+                            "variable"
+                        ],
+                        "function": [
+                            "function"
+                        ],
+                        "class": [
+                            "class"
+                        ],
+                        "type": [
+                            "type"
+                        ]
+                    }
+                }
+            }
+        },
+        "languages": [
+            {
+                "id": "cryo",
+                "extensions": [
+                    ".cryo"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "cryo",
+                "scopeName": "source.cryo",
+                "path": "./syntaxes/cryo.tmLanguage.json"
+            }
+        ],
+        "semanticTokenTypes": [
+            {
+                "id": "type",
+                "superType": "type",
+                "description": "Data types in Cryo language"
+            }
+        ],
+        "semanticTokenColors": {
+            "types": [
+                {
+                    "scope": "storage.type.cryo",
+                    "settings": {
+                        "foreground": "#4ec9b0"
+                    }
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -b",
+        "watch": "tsc -b -w",
+        "lint": "eslint ./client/src ./server/src --ext .ts,.tsx",
+        "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
+        "test": "sh ./scripts/e2e.sh"
+    },
+    "devDependencies": {
+        "@types/mocha": "^10.0.6",
+        "@types/node": "^18.14.6",
+        "@typescript-eslint/eslint-plugin": "^7.1.0",
+        "@typescript-eslint/parser": "^7.1.0",
+        "eslint": "^8.57.0",
+        "mocha": "^10.3.0",
+        "typescript": "^5.3.3"
+    }
+}
