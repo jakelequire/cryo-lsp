@@ -106,6 +106,7 @@
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
+        "preinstall": "node ./scripts/preinstall.js",
         "compile": "tsc -b",
         "watch": "tsc -b -w",
         "lint": "eslint ./client/src ./server/src --ext .ts,.tsx",
@@ -120,5 +121,11 @@
         "eslint": "^8.57.0",
         "mocha": "^10.3.0",
         "typescript": "^5.3.3"
+    },
+    "files": [
+        "node_modules/.bin/cryo-compiler"
+    ],
+    "dependencies": {
+        "fs-extra": "^11.2.0"
     }
 }

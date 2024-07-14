@@ -1,0 +1,8 @@
+
+const bar: int = 1;
+
+const buz: string = 32;
+
+public function main() -> void {
+    return;
+}
