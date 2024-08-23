@@ -135,37 +135,12 @@ documents.onDidClose(e => {
 	documentSettings.delete(e.document.uri);
 });
 
-
-connection.languages.diagnostics.on(async (params) => {
-	const document = documents.get(params.textDocument.uri);
-	if (document !== undefined) {
-		return {
-			kind: DocumentDiagnosticReportKind.Full,
-			items: await validateTextDocument(document)
-		} satisfies DocumentDiagnosticReport;
-	} else {
-		// We don't know the document. We can either try to read it from disk
-		// or we don't report problems for it.
-		return {
-			kind: DocumentDiagnosticReportKind.Full,
-			items: []
-		} satisfies DocumentDiagnosticReport;
-	}
-});
-
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent(async (change) => {
-    const diagnostics = await validateTextDocument(change.document);
-    connection.sendDiagnostics({ uri: change.document.uri, diagnostics });
+	console.log("Server Compiler Unimplemented. Doc has changed.");
 });
 
-
-async function validateTextDocument(textDocument: TextDocument): Promise<Diagnostic[]> {
-    const diagnostics = await runCryoCompiler(textDocument);
-    connection.console.log(`Diagnostics: ${JSON.stringify(diagnostics)}`);
-    return diagnostics;
-}
 
 connection.onDidChangeWatchedFiles(_change => {
 	// Monitored files have change in VSCode
