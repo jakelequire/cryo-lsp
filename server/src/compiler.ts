@@ -12,6 +12,17 @@ import * as util from 'util';
 import { execFile } from 'child_process';
 
 
+interface DiagnosticDebugInfo {
+    type: string;
+    message: string;
+    details: string;
+    file: string;
+    line: number;
+    column: number;
+    function: string;
+}
+
+
 // Promisify execFile for easier use with async/await
 const execFileAsync = util.promisify(execFile);
 
@@ -77,80 +88,66 @@ export async function runCryoCompiler(textDocument: TextDocument): Promise<Diagn
 
         // Combine stdout and stderr for parsing
         const fullOutput = stderr;
-        return parseCompilerOutput(fullOutput, textDocument);
+        return await parseCompilerOutput(fullOutput, textDocument);
     } catch (error) {
         console.error('Error running compiler:', error);
         if (error instanceof Error) {
             // If the compiler process failed, we might still want to parse its output
             const fullOutput = error.message;
-            return parseCompilerOutput(fullOutput, textDocument);
+            return await parseCompilerOutput(fullOutput, textDocument);
         }
         return [];
     }
 }
 
-function parseCompilerErrors(output: string, textDocument: TextDocument): Diagnostic[] {
-    /*
-    #COMPILATION_ERROR
-
-    File: main.cryo
-    Type: [ERROR]
-    Message: Expected an expression or statement.
-    Details: parsePrimaryExpression
-    Location: main.cryo:21:30
-    Line: 21
-    Column: 30
-    Function: parsePrimaryExpression
-
-    #END_COMPILATION_ERROR
-    
-    ^ The above is the output of the cryo compiler. The #COMPILATION_ERROR and #END_COMPILATION_ERROR tags are used to identify the start and end of an error message.
-    The error message contains the type of error, the message, details, location, line, column, and function. 
-    We can parse this output to get the error messages and their locations.
-    */
+async function parseCompilerErrors(output: string, textDocument: TextDocument): Promise<Diagnostic[]> {
     const diagnostics: Diagnostic[] = [];
-    const errorRegex = /#COMPILATION_ERROR\nFile: (.+)\nType: \[(.+)\]\nMessage: (.+)\nDetails: (.+)\nLocation: (.+):(\d+):(\d+)\nLine: (\d+)\nColumn: (\d+)\nFunction: (.+)\n#END_COMPILATION_ERROR/g;
-    let match: RegExpExecArray | null;
-    while ((match = errorRegex.exec(output)) !== null) {
-        const [, type, message, details, file, lineStr, columnStr, lineStr2, columnStr2, func] = match;
-        const line = parseInt(lineStr);
-        const column = parseInt(columnStr);
-        const line2 = parseInt(lineStr2);
-        const column2 = parseInt(columnStr2);
-        const range = {
+
+    const DiagnosticDebugInfo = errorOutput(output);
+
+    for (const error of DiagnosticDebugInfo) {
+        const diagnostic = Diagnostic.create({
             start: {
-                line: line - 1,
-                character: column - 1,
+                line: error.line - 1,
+                character: error.column - 1
             },
             end: {
-                line: line2 - 1,
-                character: column2 - 1,
-            },
-        };
-        const diagnostic: Diagnostic = {
-            severity: DiagnosticSeverity.Error,
-            range,
-            message: message,
-            source: file,
-            code: type,
-            relatedInformation: [
-                {
-                    location: {
-                        uri: textDocument.uri,
-                        range,
-                    },
-                    message: details,
-                },
-            ],
-        };
+                line: error.line - 1,
+                character: error.column
+            }
+        }, error.message, DiagnosticSeverity.Error);
+
         diagnostics.push(diagnostic);
     }
+
     return diagnostics;
 }
 
-function parseCompilerOutput(output: string, textDocument: TextDocument): Diagnostic[] {
+async function parseCompilerOutput(output: string, textDocument: TextDocument): Promise<Diagnostic[]> {
     const diagnostics: Diagnostic[] = [];
     const errors = parseCompilerErrors(output, textDocument);
-    diagnostics.push(...errors);
+    await errors.then((errors) => {
+        diagnostics.push(...errors);
+    });
     return diagnostics;
+}
+
+function errorOutput(output: string): DiagnosticDebugInfo[] {
+    const results: DiagnosticDebugInfo[] = [];
+    const errorRegex = /#COMPILATION_ERROR\n\nFile: (.+)\nType: \[(.+)\]\nMessage: (.+)\nDetails: (.+)\nLocation: (.+):(\d+):(\d+)\nLine: (\d+)\nColumn: (\d+)\nFunction: (.+)\n\n#END_COMPILATION_ERROR/g;
+    let match: RegExpExecArray | null;
+
+    while ((match = errorRegex.exec(output)) !== null) {
+        results.push({
+            file: match[1],
+            type: match[2],
+            message: match[3],
+            details: match[4],
+            line: parseInt(match[8], 10),
+            column: parseInt(match[9], 10),
+            function: match[10]
+        });
+    }
+
+    return results;
 }
