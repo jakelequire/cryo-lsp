@@ -163,13 +163,6 @@ async function validateTextDocument(textDocument: TextDocument): Promise<Diagnos
     return diagnostics;
 }
 
-// Add this event handler
-documents.onDidSave(async (params) => {
-    console.log(`Document saved: ${params.document.uri}`);
-    const diagnostics = await validateTextDocument(params.document);
-    connection.sendDiagnostics({ uri: params.document.uri, diagnostics });
-});
-
 connection.onDidChangeWatchedFiles(_change => {
 	// Monitored files have change in VSCode
 	connection.console.log('We received a file change event');
