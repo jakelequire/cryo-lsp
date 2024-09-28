@@ -6,7 +6,7 @@ extern function strLength(str: string) -> int;
 
 public function testing() -> void {
     const anotherFoo: int = 5;
-    const anotherBar: int = ;
+    const anotherBar: int = 15;
 }
 
 public function test(numberIterator: int) -> void {

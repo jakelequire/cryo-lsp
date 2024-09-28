@@ -78,6 +78,7 @@
                     "match": "\\b(as|from|of|in|null|this|super|typeof|instanceof|with)\\b"
                 }
             ]
+
         },
         "types": {
             "patterns": [
