@@ -12,6 +12,7 @@ import {
 	TextDocumentSyncKind,
 	InitializeResult,
 	DocumentDiagnosticReportKind,
+	TextDocumentSaveReason,
 	type DocumentDiagnosticReport
 } from 'vscode-languageserver/node';
 
@@ -79,11 +80,11 @@ connection.onInitialized(() => {
 		// Register for all configuration changes.
 		connection.client.register(DidChangeConfigurationNotification.type, undefined);
 	}
-	if (hasWorkspaceFolderCapability) {
-		connection.workspace.onDidChangeWorkspaceFolders(_event => {
-			connection.console.log('Workspace folder change event received.');
-		});
-	}
+	// if (hasWorkspaceFolderCapability) {
+	// 	connection.workspace.onDidChangeWorkspaceFolders(_event => {
+	// 		connection.console.log('Workspace folder change event received.');
+	// 	});
+	// }
 });
 
 // The example settings
@@ -139,25 +140,20 @@ documents.onDidClose(e => {
 connection.languages.diagnostics.on(async (params) => {
 	const document = documents.get(params.textDocument.uri);
 	if (document !== undefined) {
-		return {
+		console.log(`Validating ${document.uri}`);
+		return { 
 			kind: DocumentDiagnosticReportKind.Full,
 			items: await validateTextDocument(document)
 		} satisfies DocumentDiagnosticReport;
 	} else {
 		// We don't know the document. We can either try to read it from disk
 		// or we don't report problems for it.
+		console.log(`Document ${params.textDocument.uri} not found`);
 		return {
 			kind: DocumentDiagnosticReportKind.Full,
 			items: []
 		} satisfies DocumentDiagnosticReport;
 	}
-});
-
-// The content of a text document has changed. This event is emitted
-// when the text document first opened or when its content has changed.
-documents.onDidChangeContent(async (change) => {
-    const diagnostics = await validateTextDocument(change.document);
-    connection.sendDiagnostics({ uri: change.document.uri, diagnostics });
 });
 
 
@@ -166,6 +162,13 @@ async function validateTextDocument(textDocument: TextDocument): Promise<Diagnos
     connection.console.log(`Diagnostics: ${JSON.stringify(diagnostics)}`);
     return diagnostics;
 }
+
+// Add this event handler
+documents.onDidSave(async (params) => {
+    console.log(`Document saved: ${params.document.uri}`);
+    const diagnostics = await validateTextDocument(params.document);
+    connection.sendDiagnostics({ uri: params.document.uri, diagnostics });
+});
 
 connection.onDidChangeWatchedFiles(_change => {
 	// Monitored files have change in VSCode

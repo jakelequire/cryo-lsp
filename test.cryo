@@ -1,8 +1,42 @@
+namespace test;
 
-const bar: int = 1;
+extern function printInt(integer: int) -> void;
+extern function printStr(str: string) -> void;
+extern function strLength(str: string) -> int;
 
-const buz: string = 32;
+public function testing() -> void {
+    const anotherFoo: int = 5;
+    const anotherBar: int = ;
+}
 
-public function main() -> void {
+public function test(numberIterator: int) -> void {
+    const pleasework: int = numberIterator + 1;
+    const intArrTwo: int[] = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110];
+    //                         0    1    2    3    4    5    6    7    8    9
+    
+    const indexArrNew: int = intArrTwo[numberIterator];
+    const foo: int = indexArrNew;
+    const bar: int = buz;
+
+    printStr("Param value: ");
+    printInt(numberIterator);
+
+    printStr("Array value: ");
+    printInt(indexArrNew);
+ 
+    printStr(" ");
+
+    if(pleasework < 5) {
+        test(pleasework);
+    } else {
+        return;
+    }
     return;
 }
+
+
+public function main() -> void {
+    test(0);
+    return;
+}
+

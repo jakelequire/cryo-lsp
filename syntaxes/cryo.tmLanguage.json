@@ -11,7 +11,9 @@
         { "include": "#functions" },
         { "include": "#variables" },
         { "include": "#punctuation" },
-        { "include": "#operators" }
+        { "include": "#operators" },
+        { "include": "#struct" }        
+
     ],
     "repository": {
         "comments": {
@@ -65,15 +67,15 @@
             "patterns": [
                 {
                     "name": "keyword.control.cryo",
-                    "match": "\\b(if|else|for|while|do|break|continue|return|async|await|switch|case|default|throw|try|catch|finally)\\b"
+                    "match": "\\b(if|else|for|while|do|break|continue|return|new|async|await|switch|case|default|throw|try|catch|finally)\\b"
                 },
                 {
                     "name": "keyword.declaration.cryo",
-                    "match": "\\b(let|const|mut|function|class|interface|enum|type|true|false|namespace|extern|static|import|export|extends|implements|public|private)\\b"
+                    "match": "\\b(let|const|mut|function|class|struct|enum|type|true|false|namespace|extern|static|import|export|extends|implements|public|private)\\b"
                 },
                 {
                     "name": "keyword.other.cryo",
-                    "match": "\\b(as|from|of|in|new|null|this|super|typeof|instanceof|with)\\b"
+                    "match": "\\b(as|from|of|in|null|this|super|typeof|instanceof|with)\\b"
                 }
             ]
         },
@@ -81,7 +83,15 @@
             "patterns": [
                 {
                     "name": "support.type.primitive.cryo",
-                    "match": "(?<![_$[:alnum:]])(?:(?<=\\.\\.\\.)|(?<!\\.))(string|int|float|boolean|symbol|never|void|Array|Object|Function)(?![_$[:alnum:]])(?:(?=\\.\\.\\.)|(?!\\.))"
+                    "match": "(?<![_$[:alnum:]])(?:(?<=\\.\\.\\.)|(?<!\\.))(string|int|float|boolean|symbol|never|void)(?![_$[:alnum:]])(?:(?=\\.\\.\\.)|(?!\\.))"
+                },
+                {
+                    "name": "support.type.builtin.cryo",
+                    "match": "\\b(Array|String|Number|Object|Function|RegExp|Date|Error|Promise|Map|Set|WeakMap|WeakSet|Symbol|Generator|Iterable|Iterator|AsyncIterable|AsyncIterator|ArrayBuffer|DataView|Int8Array|Uint8Array|Uint8ClampedArray|Int16Array|Uint16Array|Int32Array|Uint32Array|Float32Array|Float64Array|BigInt64Array|BigUint64Array|SharedArrayBuffer|Atomics|JSON|Math|Reflect|Proxy)\\b"
+                },
+                {
+                    "name": "support.type.user-defined.cryo",
+                    "match": "\\b([A-Z][a-zA-Z0-9_]*)\\b"
                 }
             ],
             "settings": { "foreground": "#569cd6" }
@@ -124,6 +134,14 @@
                 { "name": "keyword.operator.comparison.cryo", "match": "==|!=|===|!==|>|<|>=|<=" },
                 { "name": "keyword.operator.logical.cryo", "match": "&&|\\|\\||!" },
                 { "name": "keyword.operator.bitwise.cryo", "match": "&|\\||\\^|~|<<|>>|>>>" }
+            ]
+        },
+        "struct": {
+            "patterns": [
+                {
+                    "name": "entity.name.struct.cryo",
+                    "match": "\\bstruct\\s+[a-zA-Z_][a-zA-Z0-9_]*"
+                }
             ]
         }
     }
