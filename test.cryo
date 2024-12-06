@@ -4,6 +4,12 @@ extern function printInt(i: int) -> void;
 extern function printStr(s: string) -> void;
 extern function intToString(num: int) -> string;
 
+const fuz: i8 = 1;
+const rez: i16 = 2;
+const poz: i32 = 3;
+const juz: i64 = 4;
+const liz: i128 = 5;
+
 struct Int {
     value: int;
 
@@ -13,6 +19,14 @@ struct Int {
 
     toString() -> string {
         return intToString(this.value);
+    }
+}
+
+static class Foo {
+    
+    static bar() -> void {
+        printStr("Bar!");
+        return;
     }
 }
 

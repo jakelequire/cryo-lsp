@@ -24,8 +24,6 @@ import {
 	TextDocument
 } from 'vscode-languageserver-textdocument';
 
-import { runCryoCompiler } from './compiler';
-
 import { tokenTypes, tokenModifiers, provideSemanticTokens, getHoverInfo } from './semantics';
 
 
@@ -46,66 +44,76 @@ let hasWorkspaceFolderCapability = false;
 let hasDiagnosticRelatedInformationCapability = false;
 
 connection.onInitialize((params: InitializeParams) => {
-    const capabilities = params.capabilities;
-
-    hasConfigurationCapability = !!(capabilities.workspace && !!capabilities.workspace.configuration);
-    hasWorkspaceFolderCapability = !!(capabilities.workspace && !!capabilities.workspace.workspaceFolders);
-    hasDiagnosticRelatedInformationCapability = !!(
-        capabilities.textDocument &&
-        capabilities.textDocument.publishDiagnostics &&
-        capabilities.textDocument.publishDiagnostics.relatedInformation
-    );
-
-    const result: InitializeResult = {
+// Log The InitializeParams
+//     
+//     const capabilities = params.capabilities;
+// 
+//     hasConfigurationCapability = !!(capabilities.workspace && !!capabilities.workspace.configuration);
+//     hasWorkspaceFolderCapability = !!(capabilities.workspace && !!capabilities.workspace.workspaceFolders);
+//     hasDiagnosticRelatedInformationCapability = !!(
+//         capabilities.textDocument &&
+//         capabilities.textDocument.publishDiagnostics &&
+//         capabilities.textDocument.publishDiagnostics.relatedInformation
+//     );
+// 
+//     const result: InitializeResult = {
+//         capabilities: {
+//             textDocumentSync: TextDocumentSyncKind.Incremental,
+//             hoverProvider: true,
+//             diagnosticProvider: {
+//                 interFileDependencies: false,
+//                 workspaceDiagnostics: false
+//             }
+//         }
+//     };
+// 
+//     if (hasWorkspaceFolderCapability) {
+//         result.capabilities.workspace = {
+//             workspaceFolders: {
+//                 supported: true
+//             }
+//         };
+//     }
+// 
+//     return result;
+    return {
         capabilities: {
             textDocumentSync: TextDocumentSyncKind.Incremental,
             hoverProvider: true,
-            diagnosticProvider: {
-                interFileDependencies: false,
-                workspaceDiagnostics: false
-            }
         }
     };
-
-    if (hasWorkspaceFolderCapability) {
-        result.capabilities.workspace = {
-            workspaceFolders: {
-                supported: true
-            }
-        };
-    }
-
-    return result;
 });
 
 connection.onInitialized(() => {
-    if (hasConfigurationCapability) {
-        connection.client.register(
-            DidChangeConfigurationNotification.type,
-            undefined
-        );
-    }
+    console.log('Server initialized');
+    // if (hasConfigurationCapability) {
+    //     connection.client.register(
+    //         DidChangeConfigurationNotification.type,
+    //         undefined
+    //     );
+    // }
 });
 
 
 documents.onDidChangeContent(change => {
-    validateTextDocument(change.document);
+    // validateTextDocument(change.document);
 });
 
 // Add this handler for save events
 documents.onDidSave(async (changeEvent: TextDocumentChangeEvent<TextDocument>) => {
-    const document = changeEvent.document;
+    // const document = changeEvent.document;
     // Clear existing diagnostics
-    connection.sendDiagnostics({ uri: document.uri, diagnostics: [] });
+    // connection.sendDiagnostics({ uri: document.uri, diagnostics: [] });
     
     // Re-validate the entire document
-    await validateTextDocument(document);
+    // await validateTextDocument(document);
 });
 
 connection.onHover(
     async ({ textDocument, position }: TextDocumentPositionParams): Promise<Hover | null> => {
         const document = documents.get(textDocument.uri);
         if (!document) {
+            console.log('No document found');
             return null;
         }
 
@@ -116,6 +124,7 @@ connection.onHover(
         const word = getWordAtPosition(text, offset);
 
         if (!word) {
+            console.log('No word found');
             return null;
         }
 
@@ -130,6 +139,7 @@ connection.onHover(
             };
         }
 
+        console.log('No hover info found');
         return null;
     }
 );
@@ -148,8 +158,8 @@ function getWordAtPosition(text: string, offset: number): string {
 }
 
 async function validateTextDocument(textDocument: TextDocument): Promise<void> {
-    const diagnostics: Diagnostic[] = await runCryoCompiler(textDocument);
-    connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
+    // Return nothing safely for now
+    return;
 }
 
 connection.onDidChangeWatchedFiles(_change => {
@@ -157,7 +167,7 @@ connection.onDidChangeWatchedFiles(_change => {
 	connection.console.log('We received a file change event');
 
 	// Clear all diagnostics
-	documents.all().forEach(validateTextDocument);
+	// documents.all().forEach(validateTextDocument);
 });
 
 
@@ -177,7 +187,7 @@ connection.onDidChangeTextDocument((params) => {
 	// Revalidate the document with the new content
 	const document = documents.get(params.textDocument.uri);
 	if (document !== undefined) {
-		validateTextDocument(document);
+		// validateTextDocument(document);
 	}
 });
 

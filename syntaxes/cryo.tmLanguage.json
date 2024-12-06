@@ -70,7 +70,7 @@
                 },
                 {
                     "name": "keyword.declaration.cryo",
-                    "match": "\\b(let|const|mut|function|class|struct|enum|type|true|false|namespace|extern|import|public|private|constructor)\\b"
+                    "match": "\\b(let|const|mut|function|static|class|struct|enum|type|true|false|namespace|extern|import|public|private|constructor)\\b"
                 },
                 {
                     "name": "keyword.other.cryo",
@@ -82,7 +82,7 @@
             "patterns": [
                 {
                     "name": "support.type.primitive.cryo",
-                    "match": "(?<![_$[:alnum:]])(?:(?<=\\.\\.\\.)|(?<!\\.))(string|int|float|boolean|symbol|never|void)(?![_$[:alnum:]])(?:(?=\\.\\.\\.)|(?!\\.))"
+                    "match": "(?<![_$[:alnum:]])(?:(?<=\\.\\.\\.)|(?<!\\.))(string|int|float|boolean|symbol|void|ptr|any|i8|i16|i32|i64|i128)(?![_$[:alnum:]])(?:(?=\\.\\.\\.)|(?!\\.))"
                 },
                 {
                     "name": "support.type.builtin.cryo",
