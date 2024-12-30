@@ -1,147 +1,172 @@
 {
-    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-    "name": "Cryo",
-    "scopeName": "source.cryo",
-    "patterns": [
-        { "include": "#comments" },
-        { "include": "#strings" },
-        { "include": "#numbers" },
-        { "include": "#keywords" },
-        { "include": "#types" },
-        { "include": "#functions" },
-        { "include": "#variables" },
-        { "include": "#punctuation" },
-        { "include": "#operators" },
-        { "include": "#struct" }
-    ],
-    "repository": {
-        "comments": {
-            "patterns": [
-                { "name": "comment.line.double-slash.cryo", "match": "//.*$" },
-                { "name": "comment.block.cryo", "begin": "/\\*", "end": "\\*/" }
-            ]
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Cryo",
+  "scopeName": "source.cryo",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#keywords" },
+    { "include": "#types" },
+    { "include": "#functions" },
+    { "include": "#variables" },
+    { "include": "#punctuation" },
+    { "include": "#operators" },
+    { "include": "#struct" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        { "name": "comment.line.double-slash.cryo", "match": "//.*$" },
+        { "name": "comment.block.cryo", "begin": "/\\*", "end": "\\*/" }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.cryo",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            { "name": "constant.character.escape.cryo", "match": "\\\\." }
+          ]
         },
-        "strings": {
-            "patterns": [
-                {
-                    "name": "string.quoted.double.cryo",
-                    "begin": "\"",
-                    "end": "\"",
-                    "patterns": [{ "name": "constant.character.escape.cryo", "match": "\\\\." }]
-                },
-                {
-                    "name": "string.quoted.single.cryo",
-                    "begin": "'",
-                    "end": "'",
-                    "patterns": [{ "name": "constant.character.escape.cryo", "match": "\\\\." }]
-                },
-                {
-                    "name": "string.template.cryo",
-                    "begin": "`",
-                    "end": "`",
-                    "patterns": [
-                        { "name": "constant.character.escape.cryo", "match": "\\\\." },
-                        {
-                            "name": "interpolation.punctuation.curly.begin.cryo",
-                            "begin": "\\${",
-                            "end": "}",
-                            "patterns": [{ "include": "$self" }]
-                        }
-                    ]
-                }
-            ]
+        {
+          "name": "string.quoted.single.cryo",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            { "name": "constant.character.escape.cryo", "match": "\\\\." }
+          ]
         },
-        "numbers": {
-            "patterns": [
-                {
-                    "name": "constant.numeric.decimal.cryo",
-                    "match": "\\b\\d+(\\.\\d+)?([eE][+-]?\\d+)?\\b"
-                },
-                { "name": "constant.numeric.hexadecimal.cryo", "match": "\\b0[xX][0-9a-fA-F]+\\b" },
-                { "name": "constant.numeric.binary.cryo", "match": "\\b0[bB][01]+\\b" },
-                { "name": "constant.numeric.octal.cryo", "match": "\\b0[oO][0-7]+\\b" }
-            ]
-        },
-        "keywords": {
-            "patterns": [
-                {
-                    "name": "keyword.control.cryo",
-                    "match": "\\b(if|else|for|while|do|break|continue|return|new|async|await|switch|case|default|throw|try|catch|finally)\\b"
-                },
-                {
-                    "name": "keyword.declaration.cryo",
-                    "match": "\\b(let|const|mut|function|static|class|struct|enum|type|true|false|namespace|extern|import|public|private|constructor)\\b"
-                },
-                {
-                    "name": "keyword.other.cryo",
-                    "match": "\\b(null|this|super|typeof|instanceof|with|constructor)\\b"
-                }
-            ]
-        },
-        "types": {
-            "patterns": [
-                {
-                    "name": "support.type.primitive.cryo",
-                    "match": "(?<![_$[:alnum:]])(?:(?<=\\.\\.\\.)|(?<!\\.))(string|int|float|boolean|symbol|void|ptr|any|i8|i16|i32|i64|i128)(?![_$[:alnum:]])(?:(?=\\.\\.\\.)|(?!\\.))"
-                },
-                {
-                    "name": "support.type.builtin.cryo",
-                    "match": "\\b(Array|String|Int|Object|Function|RegExp|Date|Error|Promise|Map|Set|WeakMap|WeakSet|Symbol|Generator|Iterable|Iterator|AsyncIterable|AsyncIterator|ArrayBuffer|DataView|Int8Array|Uint8Array|Uint8ClampedArray|Int16Array|Uint16Array|Int32Array|Uint32Array|Float32Array|Float64Array|BigInt64Array|BigUint64Array|SharedArrayBuffer|Atomics|JSON|Math|Reflect|Proxy)\\b"
-                },
-                {
-                    "name": "support.type.user-defined.cryo",
-                    "match": "\\b([A-Z][a-zA-Z0-9_]*)\\b"
-                }
-            ],
-            "settings": { "foreground": "#569cd6" }
-        },
-        "functions": {
-            "patterns": [
-                {
-                    "name": "entity.name.function.cryo",
-                    "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*(?=\\s*\\()"
-                },
-                {
-                    "name": "support.function.cryo",
-                    "match": "\\b(Object|Function)\\b"
-                }
-            ]
-        },
-        "variables": {
-            "patterns": [
-                { "name": "variable.language.cryo", "match": "\\b(this|super|arguments)\\b" },
-                { "name": "variable.other.readwrite.cryo", "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b" }
-            ]
-        },
-        "punctuation": {
-            "patterns": [
-                { "name": "punctuation.definition.parameters.cryo", "match": "[\\(\\)]" },
-                { "name": "punctuation.definition.block.cryo", "match": "[\\{\\}]" },
-                { "name": "punctuation.definition.array.cryo", "match": "[\\[\\]]" },
-                { "name": "punctuation.separator.delimiter.cryo", "match": "[,;]" },
-                { "name": "punctuation.separator.colon.cryo", "match": ":" },
-                { "name": "punctuation.separator.dot.cryo", "match": "\\." }
-            ]
-        },
-        "operators": {
-            "patterns": [
-                { "name": "keyword.operator.arithmetic.cryo", "match": "\\+|-|\\*|\\/|\\%|\\*\\*" },
-                {
-                    "name": "keyword.operator.assignment.cryo",
-                    "match": "=|\\+=|-=|\\*=|\\/=|\\%=|\\*\\*="
-                },
-                { "name": "keyword.operator.comparison.cryo", "match": "==|!=|===|!==|>|<|>=|<=" },
-                { "name": "keyword.operator.logical.cryo", "match": "&&|\\|\\||!" },
-                { "name": "keyword.operator.bitwise.cryo", "match": "&|\\||\\^|~|<<|>>|>>>" }
-            ]
-        },
-        "struct": {
-            "patterns": [
-                {
-                    "name": "entity.name.struct.cryo",
-                    "match": "\\bstruct\\s+[a-zA-Z_][a-zA-Z0-9_]*"
-                }
-            ]
+        {
+          "name": "string.template.cryo",
+          "begin": "`",
+          "end": "`",
+          "patterns": [
+            { "name": "constant.character.escape.cryo", "match": "\\\\." },
+            {
+              "name": "interpolation.punctuation.curly.begin.cryo",
+              "begin": "\\${",
+              "end": "}",
+              "patterns": [{ "include": "$self" }]
+            }
+          ]
         }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.decimal.cryo",
+          "match": "\\b\\d+(\\.\\d+)?([eE][+-]?\\d+)?\\b"
+        },
+        {
+          "name": "constant.numeric.hexadecimal.cryo",
+          "match": "\\b0[xX][0-9a-fA-F]+\\b"
+        },
+        { "name": "constant.numeric.binary.cryo", "match": "\\b0[bB][01]+\\b" },
+        { "name": "constant.numeric.octal.cryo", "match": "\\b0[oO][0-7]+\\b" }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.cryo",
+          "match": "\\b(if|else|for|while|do|break|continue|return|new|async|await|switch|case|default|throw|try|catch|finally)\\b"
+        },
+        {
+          "name": "keyword.declaration.cryo",
+          "match": "\\b(let|const|mut|function|static|class|struct|enum|type|true|false|namespace|extern|import|using|public|private|constructor)\\b"
+        },
+        {
+          "name": "keyword.other.cryo",
+          "match": "\\b(null|this|super|typeof|instanceof|with|constructor)\\b"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "support.type.primitive.cryo",
+          "match": "(?<![_$[:alnum:]])(?:(?<=\\.\\.\\.)|(?<!\\.))(string|int|float|boolean|symbol|void|ptr|any|i8|i16|i32|i64|i128)(?![_$[:alnum:]])(?:(?=\\.\\.\\.)|(?!\\.))"
+        },
+        {
+          "name": "support.type.builtin.cryo",
+          "match": "\\b(Array|String|Int|Object|Function|RegExp|Date|Error|Promise|Map|Set|WeakMap|WeakSet|Symbol|Generator|Iterable|Iterator|AsyncIterable|AsyncIterator|ArrayBuffer|DataView|Int8Array|Uint8Array|Uint8ClampedArray|Int16Array|Uint16Array|Int32Array|Uint32Array|Float32Array|Float64Array|BigInt64Array|BigUint64Array|SharedArrayBuffer|Atomics|JSON|Math|Reflect|Proxy)\\b"
+        },
+        {
+          "name": "support.type.user-defined.cryo",
+          "match": "\\b([A-Z][a-zA-Z0-9_]*)\\b"
+        }
+      ],
+      "settings": { "foreground": "#569cd6" }
+    },
+    "functions": {
+      "patterns": [
+        {
+          "name": "entity.name.function.cryo",
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*(?=\\s*\\()"
+        },
+        {
+          "name": "support.function.cryo",
+          "match": "\\b(Object|Function)\\b"
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.language.cryo",
+          "match": "\\b(this|super|arguments)\\b"
+        },
+        {
+          "name": "variable.other.readwrite.cryo",
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
+        }
+      ]
+    },
+    "punctuation": {
+      "patterns": [
+        {
+          "name": "punctuation.definition.parameters.cryo",
+          "match": "[\\(\\)]"
+        },
+        { "name": "punctuation.definition.block.cryo", "match": "[\\{\\}]" },
+        { "name": "punctuation.definition.array.cryo", "match": "[\\[\\]]" },
+        { "name": "punctuation.separator.delimiter.cryo", "match": "[,;]" },
+        { "name": "punctuation.separator.colon.cryo", "match": ":" },
+        { "name": "punctuation.separator.dot.cryo", "match": "\\." }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.arithmetic.cryo",
+          "match": "\\+|-|\\*|\\/|\\%|\\*\\*"
+        },
+        {
+          "name": "keyword.operator.assignment.cryo",
+          "match": "=|\\+=|-=|\\*=|\\/=|\\%=|\\*\\*="
+        },
+        {
+          "name": "keyword.operator.comparison.cryo",
+          "match": "==|!=|===|!==|>|<|>=|<="
+        },
+        { "name": "keyword.operator.logical.cryo", "match": "&&|\\|\\||!" },
+        {
+          "name": "keyword.operator.bitwise.cryo",
+          "match": "&|\\||\\^|~|<<|>>|>>>"
+        }
+      ]
+    },
+    "struct": {
+      "patterns": [
+        {
+          "name": "entity.name.struct.cryo",
+          "match": "\\bstruct\\s+[a-zA-Z_][a-zA-Z0-9_]*"
+        }
+      ]
     }
+  }
 }
