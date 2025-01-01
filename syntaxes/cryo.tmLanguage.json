@@ -77,7 +77,7 @@
         },
         {
           "name": "keyword.declaration.cryo",
-          "match": "\\b(let|const|mut|function|static|class|struct|enum|type|true|false|namespace|extern|import|using|public|private|constructor)\\b"
+          "match": "\\b(let|const|mut|function|static|class|struct|enum|type|module|true|false|namespace|extern|import|delcare|using|public|private|constructor)\\b"
         },
         {
           "name": "keyword.other.cryo",
