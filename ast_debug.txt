@@ -1,0 +1,20 @@
+[32m
+
+╔═══════════════════════════════ AST Tree ═══════════════════════════════╗[0m
+
+<Program : [TestingFile]> { /home/phock/Programming/apps/cryo-lsp/test.cryo }
+
+<FunctionDecl> [foo]: [96m[1m([0m[96m[1mvoid[0m[96m[1m) → [0m[96m[1m[96m[1mint[0m[0m[0m <0:0>
+   <FunctionBlock> <0:0>
+      <ReturnStatement> <0:0>
+         <IntLiteral> [843555072] <0:0>
+
+<FunctionDecl> [main]: [96m[1m([0m[96m[1mvoid[0m[96m[1m) → [0m[96m[1m[96m[1mvoid[0m[0m[0m <0:0>
+   <FunctionBlock> <0:0>
+      <VarDecl> [x] { Type: [96m[1m[96m[1mint[0m[0m } <0:0>
+      <FunctionCall> [printInt] →  [96m[1m[96m[1mvoid[0m[0m <0:0>
+      <ReturnStatement> <0:0>
+
+[32m╚════════════════════════════════════════════════════════════════════════╝
+
+[0m

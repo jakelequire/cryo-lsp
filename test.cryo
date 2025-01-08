@@ -1,51 +1,12 @@
-namespace Main;
+namespace TestingFile;
 
-extern function printInt(i: int) -> void;
-extern function printStr(s: string) -> void;
-extern function intToString(num: int) -> string;
-
-const fuz: i8 = 1;
-const rez: i16 = 2;
-const poz: i32 = 3;
-const juz: i64 = 4;
-const liz: i128 = 5;
-
-struct Int {
-    value: int;
-
-    constructor(val: int) {
-        this.value = val;
-    }
-
-    toString() -> string {
-        return intToString(this.value);
-    }
+function foo() -> int {
+    return 1;
 }
 
-static class Foo {
-    
-    static bar() -> void {
-        printStr("Bar!");
-        return;
-    }
-}
-
-public function testFunc() -> void {
-    const intTest: Int = 420;
-    printInt(intTest.value);
-    return;
-}
-
-public function main() -> void {
-    const fooInt: int = 69;
-    const barInt: int = 420;
-    printInt(fooInt);
-
-    const fooStr: string = "I'm in pain";
-    printStr(fooStr);
-    printStr("Onichan!");
-
-    testFunc();
+function main() -> void {
+    const x: int = foo();
+    printInt(x);
 
     return;
 }

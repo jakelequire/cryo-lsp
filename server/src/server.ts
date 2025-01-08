@@ -25,7 +25,10 @@ import {
 } from 'vscode-languageserver-textdocument';
 
 import { tokenTypes, tokenModifiers, provideSemanticTokens, getHoverInfo } from './semantics';
+import { initializeSymbolProvider, SymbolProvider } from './compiler';
 
+// Initialize our symbol provider
+let symbolProvider: SymbolProvider;
 
 const tokenLegend: SemanticTokensLegend = {
 	tokenTypes,
@@ -37,49 +40,24 @@ const tokenLegend: SemanticTokensLegend = {
 const connection = createConnection(ProposedFeatures.all);
 
 // Create a simple text document manager.
-const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
+export const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
 
 let hasConfigurationCapability = false;
 let hasWorkspaceFolderCapability = false;
 let hasDiagnosticRelatedInformationCapability = false;
 
 connection.onInitialize((params: InitializeParams) => {
-// Log The InitializeParams
-//     
-//     const capabilities = params.capabilities;
-// 
-//     hasConfigurationCapability = !!(capabilities.workspace && !!capabilities.workspace.configuration);
-//     hasWorkspaceFolderCapability = !!(capabilities.workspace && !!capabilities.workspace.workspaceFolders);
-//     hasDiagnosticRelatedInformationCapability = !!(
-//         capabilities.textDocument &&
-//         capabilities.textDocument.publishDiagnostics &&
-//         capabilities.textDocument.publishDiagnostics.relatedInformation
-//     );
-// 
-//     const result: InitializeResult = {
-//         capabilities: {
-//             textDocumentSync: TextDocumentSyncKind.Incremental,
-//             hoverProvider: true,
-//             diagnosticProvider: {
-//                 interFileDependencies: false,
-//                 workspaceDiagnostics: false
-//             }
-//         }
-//     };
-// 
-//     if (hasWorkspaceFolderCapability) {
-//         result.capabilities.workspace = {
-//             workspaceFolders: {
-//                 supported: true
-//             }
-//         };
-//     }
-// 
-//     return result;
+    // Initialize the symbol provider with our connection
+    symbolProvider = initializeSymbolProvider(connection);
+
     return {
         capabilities: {
             textDocumentSync: TextDocumentSyncKind.Incremental,
             hoverProvider: true,
+            completionProvider: {
+                resolveProvider: true,
+                triggerCharacters: ['.', '::'] // Add appropriate trigger characters
+            }
         }
     };
 });
@@ -96,7 +74,9 @@ connection.onInitialized(() => {
 
 
 documents.onDidChangeContent(change => {
-    // validateTextDocument(change.document);
+    const document = change.document;
+    // Notify compiler about the change
+    symbolProvider.handleDocumentChange(document);
 });
 
 // Add this handler for save events
@@ -144,7 +124,7 @@ connection.onHover(
     }
 );
 
-function getWordAtPosition(text: string, offset: number): string {
+export function getWordAtPosition(text: string, offset: number): string {
     const wordPattern = /(-?\d*\.\d\w*)|([^\`\~\!\@\#\%\^\&\*\(\)\-\=\+\[\{\]\}\\\|\;\:\'\"\,\.\<\>\/\?\s]+)/g;
     let match;
     while ((match = wordPattern.exec(text))) {
