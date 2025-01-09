@@ -7,7 +7,7 @@
 <FunctionDecl> [foo]: [96m[1m([0m[96m[1mvoid[0m[96m[1m) → [0m[96m[1m[96m[1mint[0m[0m[0m <0:0>
    <FunctionBlock> <0:0>
       <ReturnStatement> <0:0>
-         <IntLiteral> [843555072] <0:0>
+         <IntLiteral> [1734250768] <0:0>
 
 <FunctionDecl> [main]: [96m[1m([0m[96m[1mvoid[0m[96m[1m) → [0m[96m[1m[96m[1mvoid[0m[0m[0m <0:0>
    <FunctionBlock> <0:0>

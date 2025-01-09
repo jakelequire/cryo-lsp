@@ -26,6 +26,7 @@ import {
 
 import { tokenTypes, tokenModifiers, provideSemanticTokens, getHoverInfo } from './semantics';
 import { initializeSymbolProvider, SymbolProvider } from './compiler';
+import { SymbolTable } from './symbolTable';
 
 // Initialize our symbol provider
 let symbolProvider: SymbolProvider;
@@ -48,7 +49,8 @@ let hasDiagnosticRelatedInformationCapability = false;
 
 connection.onInitialize((params: InitializeParams) => {
     // Initialize the symbol provider with our connection
-    symbolProvider = initializeSymbolProvider(connection);
+    const symTable: SymbolTable = new SymbolTable();
+    symbolProvider = initializeSymbolProvider(connection, symTable);
 
     return {
         capabilities: {
