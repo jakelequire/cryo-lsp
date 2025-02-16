@@ -50,7 +50,7 @@ let hasDiagnosticRelatedInformationCapability = false;
 connection.onInitialize((params: InitializeParams) => {
     // Initialize the symbol provider with our connection
     const symTable: SymbolTable = new SymbolTable();
-    symbolProvider = initializeSymbolProvider(connection, symTable);
+    // symbolProvider = initializeSymbolProvider(connection, symTable);
 
     return {
         capabilities: {
@@ -78,7 +78,7 @@ connection.onInitialized(() => {
 documents.onDidChangeContent(change => {
     const document = change.document;
     // Notify compiler about the change
-    symbolProvider.handleDocumentChange(document);
+    // symbolProvider.handleDocumentChange(document);
 });
 
 // Add this handler for save events
