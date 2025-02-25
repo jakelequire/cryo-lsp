@@ -49,7 +49,6 @@ let hasDiagnosticRelatedInformationCapability = false;
 
 connection.onInitialize((params: InitializeParams) => {
     // Initialize the symbol provider with our connection
-    const symTable: SymbolTable = new SymbolTable();
     // symbolProvider = initializeSymbolProvider(connection, symTable);
 
     return {
@@ -167,10 +166,10 @@ connection.onDidChangeTextDocument((params) => {
 	connection.console.log(`${params.textDocument.uri} changed: ${JSON.stringify(params.contentChanges)}`);
 
 	// Revalidate the document with the new content
-	const document = documents.get(params.textDocument.uri);
-	if (document !== undefined) {
-		// validateTextDocument(document);
-	}
+	// const document = documents.get(params.textDocument.uri);
+	// if (document !== undefined) {
+	// 	// validateTextDocument(document);
+	// }
 });
 
 connection.onDidCloseTextDocument((params) => {
