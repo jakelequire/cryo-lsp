@@ -73,11 +73,11 @@
       "patterns": [
         {
           "name": "keyword.control.cryo",
-          "match": "\\b(if|else|for|while|do|break|continue|return|new|async|await|switch|case|default|throw|try|catch|finally)\\b"
+          "match": "\\b(if|else|for|in|while|do|break|continue|return|new|async|await|switch|case|default|throw|try|catch|finally)\\b"
         },
         {
           "name": "keyword.declaration.cryo",
-          "match": "\\b(let|const|mut|function|static|class|struct|enum|type|module|true|false|namespace|extern|import|delcare|using|public|private|constructor|extends|impl)\\b"
+          "match": "\\b(let|const|mut|function|static|class|struct|enum|type|module|true|false|required|namespace|extern|import|delcare|using|public|private|constructor|extends|impl)\\b"
         },
         {
           "name": "keyword.other.cryo",
