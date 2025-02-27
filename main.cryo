@@ -1,59 +1,17 @@
-// This is a test
-/*
-    This is a test
-*/
-const biz: int = 20;
-const bar: string = "Hello World";
-const baz: float = 20.0;
-const foo: boolean = true;
-const qux: Array[int] = [1, 2, 3, 4, 5];
+namespace Main;
 
-function foo() -> void {
-    return 20;
+function vaArgTest<T>(foo: int, ...args: T[]) -> int {
+
+    for (arg in args) {
+        println("Arg: %s\n", arg);
+    }
+
+    return 0;
 }
-foo();
 
-"Hello World"
-'Hi there!'
-`Hello World`
-
-
-34 + 20 - 10 * 2 / 5 % 2
-{}
-[]
-()
-null
-void
-int
-float
-string
-boolean
-Function
-Object
-Array
-const
-mut
-function
-class
-type
-return
-if
-else
-while
-for
-break
-continue
-async
-
-typeof
-instanceof
-as
-
-true
-false
-
-extern
-static
-
-
+function main(argc: int, argv: string[]) -> int {
+    println("Hello, World!\n");
+    vaArgTest(10, "Hello!");
+    return 0;
+}
 
