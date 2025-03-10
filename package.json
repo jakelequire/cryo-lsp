@@ -3,7 +3,7 @@
   "description": "Cryo Language Server",
   "displayName": "Cryo Language Support",
   "author": "Jake LeQuire",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "repository": {
     "type": "git",
     "url": "https://github.com/jakelequire/cryo-lsp"
@@ -100,7 +100,26 @@
           "settings": {
             "foreground": "#4ec9b0"
           }
-        }
+        },{
+      "punctuation": {
+        "patterns": [
+          {
+            "name": "punctuation.definition.parameters.cryo",
+            "match": "[\\(\\)]"
+          },
+          { "name": "punctuation.definition.block.cryo", "match": "[\\{\\}]" },
+          { "name": "punctuation.definition.array.cryo", "match": "[\\[\\]]" },
+          { "name": "punctuation.separator.delimiter.cryo", "match": "[,;]" },
+          { "name": "punctuation.separator.colon.cryo", "match": ":" },
+          { "name": "punctuation.separator.dot.cryo", "match": "\\." },
+          { "name": "punctuation.separator.parameter.cryo", "match": "\\b=>\\b" },
+          { "name": "punctuation.separator.template.cryo", "match": "\\$\\{|\\}" },
+          { "name": "punctuation.separator.template.cryo", "match": "\\$\\{" },
+          { "name": "punctuation.separator.template.cryo", "match": "\\}" },
+          { "name": "puctuation.separator.at", "match": "@", "settings": { "foreground": "#4ec9b0" } }
+        ]
+      }
+}
       ]
     }
   },

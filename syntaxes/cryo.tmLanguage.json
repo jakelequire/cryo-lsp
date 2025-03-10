@@ -73,7 +73,7 @@
       "patterns": [
         {
           "name": "keyword.control.cryo",
-          "match": "\\b(if|else|for|in|while|do|break|continue|return|new|async|await|switch|case|default|throw|try|catch|finally)\\b"
+          "match": "\\b(if|else|for|in|while|do|break|continue|pragma|@pragma|return|new|async|await|switch|case|default|throw|try|catch|finally)\\b"
         },
         {
           "name": "keyword.declaration.cryo",
@@ -140,7 +140,12 @@
         { "name": "punctuation.definition.array.cryo", "match": "[\\[\\]]" },
         { "name": "punctuation.separator.delimiter.cryo", "match": "[,;]" },
         { "name": "punctuation.separator.colon.cryo", "match": ":" },
-        { "name": "punctuation.separator.dot.cryo", "match": "\\." }
+        { "name": "punctuation.separator.dot.cryo", "match": "\\." },
+        { "name": "punctuation.separator.parameter.cryo", "match": "\\b=>\\b" },
+        { "name": "punctuation.separator.template.cryo", "match": "\\$\\{|\\}" },
+        { "name": "punctuation.separator.template.cryo", "match": "\\$\\{" },
+        { "name": "punctuation.separator.template.cryo", "match": "\\}" },
+        { "name": "puctuation.separator.at", "match": "@" }
       ]
     },
     "operators": {

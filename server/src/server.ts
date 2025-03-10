@@ -47,21 +47,6 @@ let hasConfigurationCapability = false;
 let hasWorkspaceFolderCapability = false;
 let hasDiagnosticRelatedInformationCapability = false;
 
-connection.onInitialize((params: InitializeParams) => {
-    // Initialize the symbol provider with our connection
-    // symbolProvider = initializeSymbolProvider(connection, symTable);
-
-    return {
-        capabilities: {
-            textDocumentSync: TextDocumentSyncKind.Incremental,
-            hoverProvider: true,
-            completionProvider: {
-                resolveProvider: true,
-                triggerCharacters: ['.', '::'] // Add appropriate trigger characters
-            }
-        }
-    };
-});
 
 connection.onInitialized(() => {
     console.log('Server initialized');
@@ -90,40 +75,40 @@ documents.onDidSave(async (changeEvent: TextDocumentChangeEvent<TextDocument>) =
     // await validateTextDocument(document);
 });
 
-connection.onHover(
-    async ({ textDocument, position }: TextDocumentPositionParams): Promise<Hover | null> => {
-        const document = documents.get(textDocument.uri);
-        if (!document) {
-            console.log('No document found');
-            return null;
-        }
+// connection.onHover(
+//     async ({ textDocument, position }: TextDocumentPositionParams): Promise<Hover | null> => {
+//         const document = documents.get(textDocument.uri);
+//         if (!document) {
+//             console.log('No document found');
+//             return null;
+//         }
 
-        const offset = document.offsetAt(position);
-        const text = document.getText();
-        const lines = text.split(/\r\n|\r|\n/);
-        const line = lines[position.line];
-        const word = getWordAtPosition(text, offset);
+//         const offset = document.offsetAt(position);
+//         const text = document.getText();
+//         const lines = text.split(/\r\n|\r|\n/);
+//         const line = lines[position.line];
+//         const word = getWordAtPosition(text, offset);
 
-        if (!word) {
-            console.log('No word found');
-            return null;
-        }
+//         if (!word) {
+//             console.log('No word found');
+//             return null;
+//         }
 
-        const info = getHoverInfo(word, line);
+//         const info = getHoverInfo(word, line);
 
-        if (info) {
-            return {
-                contents: {
-                    kind: 'markdown',
-                    value: `\`\`\`\n${info}\n\`\`\``
-                }
-            };
-        }
+//         if (info) {
+//             return {
+//                 contents: {
+//                     kind: 'markdown',
+//                     value: `\`\`\`\n${info}\n\`\`\``
+//                 }
+//             };
+//         }
 
-        console.log('No hover info found');
-        return null;
-    }
-);
+//         console.log('No hover info found');
+//         return null;
+//     }
+// );
 
 export function getWordAtPosition(text: string, offset: number): string {
     const wordPattern = /(-?\d*\.\d\w*)|([^\`\~\!\@\#\%\^\&\*\(\)\-\=\+\[\{\]\}\\\|\;\:\'\"\,\.\<\>\/\?\s]+)/g;
@@ -137,46 +122,6 @@ export function getWordAtPosition(text: string, offset: number): string {
     }
     return '';
 }
-
-async function validateTextDocument(textDocument: TextDocument): Promise<void> {
-    // Return nothing safely for now
-    return;
-}
-
-connection.onDidChangeWatchedFiles(_change => {
-	// Monitored files have change in VSCode
-	connection.console.log('We received a file change event');
-
-	// Clear all diagnostics
-	// documents.all().forEach(validateTextDocument);
-});
-
-
-connection.onDidOpenTextDocument((params) => {
-	// A text document got opened in VSCode.
-	// params.uri uniquely identifies the document. For documents store on disk this is a file URI.
-	// params.text the initial full content of the document.
-	connection.console.log(`${params.textDocument.uri} opened.`);
-});
-
-connection.onDidChangeTextDocument((params) => {
-	// The content of a text document did change in VSCode.
-	// params.uri uniquely identifies the document.
-	// params.contentChanges describe the content changes to the document.
-	connection.console.log(`${params.textDocument.uri} changed: ${JSON.stringify(params.contentChanges)}`);
-
-	// Revalidate the document with the new content
-	// const document = documents.get(params.textDocument.uri);
-	// if (document !== undefined) {
-	// 	// validateTextDocument(document);
-	// }
-});
-
-connection.onDidCloseTextDocument((params) => {
-	// A text document got closed in VSCode.
-	// params.uri uniquely identifies the document.
-	connection.console.log(`${params.textDocument.uri} closed.`);
-});
 
 
 // Make the text document manager listen on the connection
