@@ -57,21 +57,21 @@ export function activate(context: ExtensionContext) {
 	};
 
 	// Options to control the language client
-	const clientOptions: LanguageClientOptions = {
-		// Register the server for plain text documents
-		documentSelector: [{ scheme: 'file', language: 'cryo' }],
-	};
+	// const clientOptions: LanguageClientOptions = {
+	// 	// Register the server for plain text documents
+	// 	documentSelector: [{ scheme: 'file', language: 'cryo' }],
+	// };
 
 	// Create the language client and start the client.
-	client = new LanguageClient(
-		'Cryo Language Server',
-		'Cryo Language Server',
-		serverOptions,
-		clientOptions
-	);
+	// client = new LanguageClient(
+	// 	'Cryo Language Server',
+	// 	'Cryo Language Server',
+	// 	serverOptions,
+	// 	clientOptions
+	// );
 
 	// Start the client. This will also launch the server
-	client.start();
+	// client.start();
 }
 
 export function deactivate(): Thenable<void> | undefined {
