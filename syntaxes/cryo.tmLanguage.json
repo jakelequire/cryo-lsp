@@ -89,7 +89,7 @@
       "patterns": [
         {
           "name": "support.type.primitive.cryo",
-          "match": "(?<![_$[:alnum:]])(?:(?<=\\.\\.\\.)|(?<!\\.))(string|int|float|boolean|symbol|void|ptr|any|i8|i16|i32|i64|i128)(?![_$[:alnum:]])(?:(?=\\.\\.\\.)|(?!\\.))"
+          "match": "(?<![_$[:alnum:]])(?:(?<=\\.\\.\\.)|(?<!\\.))(string|str|int|float|boolean|symbol|void|ptr|any|i8|i16|i32|i64|i128|ptr|pointer)(?![_$[:alnum:]])(?:(?=\\.\\.\\.)|(?!\\.))"
         },
         {
           "name": "support.type.builtin.cryo",
@@ -142,7 +142,10 @@
         { "name": "punctuation.separator.colon.cryo", "match": ":" },
         { "name": "punctuation.separator.dot.cryo", "match": "\\." },
         { "name": "punctuation.separator.parameter.cryo", "match": "\\b=>\\b" },
-        { "name": "punctuation.separator.template.cryo", "match": "\\$\\{|\\}" },
+        {
+          "name": "punctuation.separator.template.cryo",
+          "match": "\\$\\{|\\}"
+        },
         { "name": "punctuation.separator.template.cryo", "match": "\\$\\{" },
         { "name": "punctuation.separator.template.cryo", "match": "\\}" },
         { "name": "puctuation.separator.at", "match": "@" }
